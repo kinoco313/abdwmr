@@ -28,6 +28,41 @@ def _():
 
 @app.cell
 def _():
+    import os
+
+    def get_directory_size(directory):
+        total_size = 0
+        for dirpath, dirnames, filenames in os.walk(directory):
+            for filename in filenames:
+                filepath = os.path.join(dirpath, filename)
+                total_size += os.path.getsize(filepath)
+        return total_size
+
+    csv_directory = 'lahman_1871-2023_csv'
+    parquet_directory = 'lahman_1871-2023_parquet'
+
+    csv_size = get_directory_size(csv_directory)
+    parquet_size = get_directory_size(parquet_directory)
+
+    csv_size, parquet_size, csv_size/parquet_size
+    return (
+        csv_directory,
+        csv_size,
+        get_directory_size,
+        os,
+        parquet_directory,
+        parquet_size,
+    )
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""parquetに変換すると約5分の1に小さくできる！""")
+    return
+
+
+@app.cell
+def _():
     return
 
 
